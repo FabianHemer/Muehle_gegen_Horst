@@ -1,7 +1,5 @@
 # Muehle_gegen_Horst
 
-Implementierung des Brettspiels Mühle in Python
-
 ## Ziele
 - Vollständige Implementierung des Spiels in Python
 - Benutzung über grafische Oberfläche
