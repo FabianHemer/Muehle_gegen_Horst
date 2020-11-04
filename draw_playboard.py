@@ -33,36 +33,84 @@ def generate_window():
 
 def draw_buttons(fenster):
     board.point_00 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(0,0))
+    board.point_00.x = 0
+    board.point_00.y = 0
     board.point_03 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(0,3))
+    board.point_03.x = 0
+    board.point_03.y = 3
     board.point_06 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(0,6))
+    board.point_06.x = 0
+    board.point_06.y = 6
 
     board.point_11 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(1,1))
+    board.point_11.x = 1
+    board.point_11.y = 1
     board.point_13 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(1,3))
+    board.point_13.x = 1
+    board.point_13.y = 3
     board.point_15 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(1,5))
+    board.point_15.x = 1
+    board.point_15.y = 5
 
     board.point_22 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(2,2))
+    board.point_22.x = 2
+    board.point_22.y = 2
     board.point_23 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(2,3))
+    board.point_23.x = 2
+    board.point_23.y = 3
     board.point_24 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(2,4))
+    board.point_24.x = 2
+    board.point_24.y = 4
 
     board.point_30 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,0))
+    board.point_30.x = 3
+    board.point_30.y = 0
     board.point_31 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,1))
+    board.point_31.x = 3
+    board.point_31.y = 1    
     board.point_32 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,2))
+    board.point_32.x = 3
+    board.point_32.y = 2
 
     board.point_34 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,4))
+    board.point_34.x = 3
+    board.point_34.y = 4
     board.point_35 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,5))
+    board.point_35.x = 3
+    board.point_35.y = 5
     board.point_36 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,6))
+    board.point_36.x = 3
+    board.point_36.y = 6
 
     board.point_42 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(4,2))
+    board.point_42.x = 4
+    board.point_42.y = 2
     board.point_43 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(4,3))
+    board.point_43.x = 4
+    board.point_43.y = 3
     board.point_44 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(4,4))
+    board.point_44.x = 4
+    board.point_44.y = 4
 
     board.point_51 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(5,1))
+    board.point_51.x = 5
+    board.point_51.y = 1
     board.point_53 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(5,3))
+    board.point_53.x = 5
+    board.point_53.y = 3
     board.point_55 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(5,5))
+    board.point_55.x = 5
+    board.point_55.y = 5
 
     board.point_60 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(6,0))
+    board.point_60.x = 6
+    board.point_60.y = 0    
     board.point_63 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(6,3))
+    board.point_63.x = 6
+    board.point_63.y = 3    
     board.point_66 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(6,6))
+    board.point_66.x = 6
+    board.point_66.y = 6
 
 
     '''
