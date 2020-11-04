@@ -1,5 +1,7 @@
 # Muehle_gegen_Horst
 
+getestet mit Python 3.7.3
+
 ## Ziele
 - Vollständige Implementierung des Spiels in Python
 - Benutzung über grafische Oberfläche
