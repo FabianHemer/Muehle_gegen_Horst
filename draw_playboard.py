@@ -8,6 +8,12 @@ class playboard:
     black_pieces_set = 0
     white_pieces_board = 0
     black_pieces_board = 0
+    remove_piece = False
+    move_piece = False
+    jump_piece = False
+    moved_x = 0
+    moved_y = 0
+    win = 0
     def __init__(self):
         print("Board erstellt")
 
@@ -124,35 +130,35 @@ def draw_buttons(fenster):
 
     # Nun fügen wir die Komponenten unserem Fenster 
     # in der gwünschten Reihenfolge hinzu.
-    board.point_00.grid(row=0, column=0, padx=20, pady=20)
-    board.point_03.grid(row=0, column=3, padx=20, pady=20)
-    board.point_06.grid(row=0, column=6, padx=20, pady=20)
-    board.point_11.grid(row=1, column=1, padx=20, pady=20)
-    board.point_13.grid(row=1, column=3, padx=20, pady=20)
-    board.point_15.grid(row=1, column=5, padx=20, pady=20)
-    board.point_22.grid(row=2, column=2, padx=20, pady=20)
-    board.point_23.grid(row=2, column=3, padx=20, pady=20)
-    board.point_24.grid(row=2, column=4, padx=20, pady=20)
-    board.point_30.grid(row=3, column=0, padx=20, pady=20)
-    board.point_31.grid(row=3, column=1, padx=20, pady=20)
-    board.point_32.grid(row=3, column=2, padx=20, pady=20)
-    board.point_34.grid(row=3, column=4, padx=20, pady=20)
-    board.point_35.grid(row=3, column=5, padx=20, pady=20)
-    board.point_36.grid(row=3, column=6, padx=20, pady=20)
-    board.point_42.grid(row=4, column=2, padx=20, pady=20)
-    board.point_43.grid(row=4, column=3, padx=20, pady=20)
-    board.point_44.grid(row=4, column=4, padx=20, pady=20)
-    board.point_51.grid(row=5, column=1, padx=20, pady=20)
-    board.point_53.grid(row=5, column=3, padx=20, pady=20)
-    board.point_55.grid(row=5, column=5, padx=20, pady=20)
-    board.point_60.grid(row=6, column=0, padx=20, pady=20)
-    board.point_63.grid(row=6, column=3, padx=20, pady=20)
-    board.point_66.grid(row=6, column=6, padx=20, pady=20)
+    board.point_00.grid(row=0, column=0, padx=23, pady=20)
+    board.point_03.grid(row=0, column=3, padx=23, pady=20)
+    board.point_06.grid(row=0, column=6, padx=23, pady=20)
+    board.point_11.grid(row=1, column=1, padx=23, pady=20)
+    board.point_13.grid(row=1, column=3, padx=23, pady=20)
+    board.point_15.grid(row=1, column=5, padx=23, pady=20)
+    board.point_22.grid(row=2, column=2, padx=23, pady=20)
+    board.point_23.grid(row=2, column=3, padx=23, pady=20)
+    board.point_24.grid(row=2, column=4, padx=23, pady=20)
+    board.point_30.grid(row=3, column=0, padx=23, pady=20)
+    board.point_31.grid(row=3, column=1, padx=23, pady=20)
+    board.point_32.grid(row=3, column=2, padx=23, pady=20)
+    board.point_34.grid(row=3, column=4, padx=23, pady=20)
+    board.point_35.grid(row=3, column=5, padx=23, pady=20)
+    board.point_36.grid(row=3, column=6, padx=23, pady=20)
+    board.point_42.grid(row=4, column=2, padx=23, pady=20)
+    board.point_43.grid(row=4, column=3, padx=23, pady=20)
+    board.point_44.grid(row=4, column=4, padx=23, pady=20)
+    board.point_51.grid(row=5, column=1, padx=23, pady=20)
+    board.point_53.grid(row=5, column=3, padx=23, pady=20)
+    board.point_55.grid(row=5, column=5, padx=23, pady=20)
+    board.point_60.grid(row=6, column=0, padx=23, pady=20)
+    board.point_63.grid(row=6, column=3, padx=23, pady=20)
+    board.point_66.grid(row=6, column=6, padx=23, pady=20)
 
     board.info1 = Label(fenster, text="Bitte Stein setzen!")
-    board.info1.grid(row=7, column=0)
+    board.info1.grid(row=7, columnspan = 7)
     board.info2 = Label(fenster, text="")
-    board.info2.grid(row=8, column=0)
+    board.info2.grid(row=8, columnspan = 7)
 
     menuleiste = Menu(fenster)
     datei_menu = Menu(menuleiste, tearoff=0)
