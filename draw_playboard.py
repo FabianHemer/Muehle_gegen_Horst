@@ -18,10 +18,7 @@ class playboard:
         print("Board erstellt")
 
 
-board = playboard()
-
-
-def button_action(x, y):
+def button_action(board,x, y):
     gl.button_clicked(board, x, y)
 
 def hilfe():
@@ -31,105 +28,105 @@ def neustart():
     print("Neustart called")
 
 def generate_window():
-    fenster = Tk()
-    fenster.title("Mühlebrett")
-    fenster.configure(background="light green")
-    return fenster
+    window = Tk()
+    window.title("Mühlebrett")
+    window.configure(background="light green")
+    return window
 
 
-def draw_buttons(fenster):
-    board.point_00 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(0,0))
+def draw_buttons(board, window):
+    board.point_00 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,0,0))
     board.point_00.x = 0
     board.point_00.y = 0
-    board.point_03 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(0,3))
+    board.point_03 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,0,3))
     board.point_03.x = 0
     board.point_03.y = 3
-    board.point_06 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(0,6))
+    board.point_06 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,0,6))
     board.point_06.x = 0
     board.point_06.y = 6
 
-    board.point_11 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(1,1))
+    board.point_11 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,1,1))
     board.point_11.x = 1
     board.point_11.y = 1
-    board.point_13 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(1,3))
+    board.point_13 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,1,3))
     board.point_13.x = 1
     board.point_13.y = 3
-    board.point_15 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(1,5))
+    board.point_15 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,1,5))
     board.point_15.x = 1
     board.point_15.y = 5
 
-    board.point_22 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(2,2))
+    board.point_22 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,2,2))
     board.point_22.x = 2
     board.point_22.y = 2
-    board.point_23 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(2,3))
+    board.point_23 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,2,3))
     board.point_23.x = 2
     board.point_23.y = 3
-    board.point_24 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(2,4))
+    board.point_24 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,2,4))
     board.point_24.x = 2
     board.point_24.y = 4
 
-    board.point_30 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,0))
+    board.point_30 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,3,0))
     board.point_30.x = 3
     board.point_30.y = 0
-    board.point_31 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,1))
+    board.point_31 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,3,1))
     board.point_31.x = 3
     board.point_31.y = 1    
-    board.point_32 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,2))
+    board.point_32 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,3,2))
     board.point_32.x = 3
     board.point_32.y = 2
 
-    board.point_34 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,4))
+    board.point_34 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,3,4))
     board.point_34.x = 3
     board.point_34.y = 4
-    board.point_35 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,5))
+    board.point_35 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,3,5))
     board.point_35.x = 3
     board.point_35.y = 5
-    board.point_36 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(3,6))
+    board.point_36 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,3,6))
     board.point_36.x = 3
     board.point_36.y = 6
 
-    board.point_42 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(4,2))
+    board.point_42 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,4,2))
     board.point_42.x = 4
     board.point_42.y = 2
-    board.point_43 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(4,3))
+    board.point_43 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,4,3))
     board.point_43.x = 4
     board.point_43.y = 3
-    board.point_44 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(4,4))
+    board.point_44 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,4,4))
     board.point_44.x = 4
     board.point_44.y = 4
 
-    board.point_51 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(5,1))
+    board.point_51 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,5,1))
     board.point_51.x = 5
     board.point_51.y = 1
-    board.point_53 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(5,3))
+    board.point_53 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,5,3))
     board.point_53.x = 5
     board.point_53.y = 3
-    board.point_55 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(5,5))
+    board.point_55 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,5,5))
     board.point_55.x = 5
     board.point_55.y = 5
 
-    board.point_60 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(6,0))
+    board.point_60 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,6,0))
     board.point_60.x = 6
     board.point_60.y = 0    
-    board.point_63 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(6,3))
+    board.point_63 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,6,3))
     board.point_63.x = 6
     board.point_63.y = 3    
-    board.point_66 = Button(fenster, text="", bg="brown", activebackground="grey", command=lambda: button_action(6,6))
+    board.point_66 = Button(window, text="", bg="brown", activebackground="grey", command=lambda: button_action(board,6,6))
     board.point_66.x = 6
     board.point_66.y = 6
 
 
     '''
-    w_01 = Canvas(fenster, width=100, height=100)
+    w_01 = Canvas(window, width=100, height=100)
     w_01.grid(row=0,column=1)
     w_01.create_line(0, 50, 100, 50)
-    w_02 = Canvas(fenster, width=100, height=100)
+    w_02 = Canvas(window, width=100, height=100)
     w_02.grid(row=0,column=2)
     w_02.create_line(0, 50, 100, 50)
     '''
 
     # Nun fügen wir die Komponenten unserem Fenster 
-    # in der gwünschten Reihenfolge hinzu.
+    # in der gewünschten Reihenfolge hinzu.
     board.point_00.grid(row=0, column=0, padx=23, pady=20)
     board.point_03.grid(row=0, column=3, padx=23, pady=20)
     board.point_06.grid(row=0, column=6, padx=23, pady=20)
@@ -155,18 +152,18 @@ def draw_buttons(fenster):
     board.point_63.grid(row=6, column=3, padx=23, pady=20)
     board.point_66.grid(row=6, column=6, padx=23, pady=20)
 
-    board.info1 = Label(fenster, text="Bitte Stein setzen!")
+    board.info1 = Label(window, text="Bitte Stein setzen!")
     board.info1.grid(row=7, columnspan = 7)
-    board.info2 = Label(fenster, text="")
+    board.info2 = Label(window, text="")
     board.info2.grid(row=8, columnspan = 7)
 
-    menuleiste = Menu(fenster)
+    menuleiste = Menu(window)
     datei_menu = Menu(menuleiste, tearoff=0)
     datei_menu.add_command(label="Hilfe", command=hilfe)
     datei_menu.add_command(label="Neustart", command=neustart)
-    datei_menu.add_command(label="Schließen", command=fenster.quit)
+    datei_menu.add_command(label="Schließen", command=window.quit)
 
     menuleiste.add_cascade(label="Datei", menu=datei_menu)
-    fenster.config(menu=menuleiste)
+    window.config(menu=menuleiste)
 
-    fenster.mainloop()
+    window.mainloop()

@@ -122,13 +122,16 @@ def return_random_point_to_move(board, color):
     while not_found and point_list:
         random_string = random.choice(point_list)
         random_point = getattr(board, 'point_' + random_string)
-        neighbors = get_neighbors(board, random_point.x, random_point.y)
-        possible_to_move = False
-        for neighbor in neighbors:
-            if neighbor.cget("bg") == "brown":
-                possible_to_move = True
-        if random_point.cget("bg") == color and possible_to_move:
-            not_found = False
+        if random_point.cget("bg") == color:
+            neighbors = get_neighbors(board, random_point.x, random_point.y)
+            possible_to_move = False
+            for neighbor in neighbors:
+                if neighbor.cget("bg") == "brown":
+                    possible_to_move = True
+            if possible_to_move:
+                not_found = False
+            else:
+                point_list.remove(random_string)
         else:
             point_list.remove(random_string)
     if point_list:
@@ -279,7 +282,6 @@ def computers_turn(board):
         board.black_pieces_board = board.black_pieces_board + 1
         board.black_pieces_set = board.black_pieces_set + 1
         look_for_cpu_mill(board, random_point.x, random_point.y)
-    
     else:
         # move cpu piece
         if board.black_pieces_board > 3:
@@ -295,8 +297,18 @@ def computers_turn(board):
             else:
                 board.info1.configure(text="Du hast gewonnen! Schwarz ist bewegungsunfähig!")
                 board.win = 1
+        # jump cpu piece
         else:
-            pass
-        
+            first_point = return_random_point(board, "black")
+            second_point = return_random_point(board, "brown")
+            first_point.configure(bg="brown")
+            second_point.configure(bg="black")
+            look_for_cpu_mill(board, second_point.x, second_point.y)
+
+    # check if white can move
+    white_point = return_random_point_to_move(board, "white")
+    if white_point is None:
+        board.info1.configure(text="Du hast verloren! Weiß ist bewegungsunfähig!")
+        board.win = 2
 
 

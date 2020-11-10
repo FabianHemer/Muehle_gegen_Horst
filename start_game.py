@@ -2,8 +2,8 @@
 
 import draw_playboard as draw
 
-fenster = draw.generate_window()
-
-draw.draw_buttons(fenster)
+window = draw.generate_window()
+board = draw.playboard()
+draw.draw_buttons(board, window)
 
 print("Program finished")
