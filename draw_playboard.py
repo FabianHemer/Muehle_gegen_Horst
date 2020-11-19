@@ -1,36 +1,56 @@
 # draw_playboard.py
 
 from tkinter import *
+import random
 import game_logic as gl
 
+globalwindow = None
+
 class playboard:
-    white_pieces_set = 0
-    black_pieces_set = 0
-    white_pieces_board = 0
-    black_pieces_board = 0
-    remove_piece = False
-    move_piece = False
-    jump_piece = False
-    moved_x = 0
-    moved_y = 0
-    win = 0
     def __init__(self):
+        self.human_pieces_set = 0
+        self.cpu_pieces_set = 0
+        self.human_pieces_board = 0
+        self.cpu_pieces_board = 0
+        self.remove_piece = False
+        self.move_piece = False
+        self.jump_piece = False
+        self.moved_x = 0
+        self.moved_y = 0
+        self.win = 0
+        self.human_is = "white"
+        self.cpu_is = "black"
         print("Board erstellt")
 
 
 def button_action(board,x, y):
     gl.button_clicked(board, x, y)
 
+
 def hilfe():
     print("Hilfe called")
 
+
 def neustart():
     print("Neustart called")
+    beenden()
+    window = generate_window()
+    board = playboard()
+    draw_buttons(board, window)
+
+
+def beenden():
+    global globalwindow
+    print("Beenden called")
+    globalwindow.destroy()
+
 
 def generate_window():
+    global globalwindow
     window = Tk()
     window.title("Mühlebrett")
     window.configure(background="light green")
+    globalwindow = window
     return window
 
 
@@ -161,9 +181,15 @@ def draw_buttons(board, window):
     datei_menu = Menu(menuleiste, tearoff=0)
     datei_menu.add_command(label="Hilfe", command=hilfe)
     datei_menu.add_command(label="Neustart", command=neustart)
-    datei_menu.add_command(label="Schließen", command=window.quit)
+    datei_menu.add_command(label="Schließen", command=beenden)
 
     menuleiste.add_cascade(label="Datei", menu=datei_menu)
     window.config(menu=menuleiste)
 
+    # check if human or cpu begins
+    if(random.randint(0,1) == 0):
+        board.human_is = "black"
+        board.cpu_is = "white"
+        gl.computers_turn(board)
+    
     window.mainloop()
