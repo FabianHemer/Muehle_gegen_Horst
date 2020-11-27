@@ -3,6 +3,12 @@
 import random
 
 
+def export_move(type, active_player, color, from_x, from_y, to_x, to_y):
+    # type=0 -> set piece, type=1 -> move piece, type=2 -> remove piece
+    print("type=", type, "player_active=", active_player, "color=", color, "from:", from_x, from_y, "to:", to_x, to_y)
+    
+
+
 def get_neighbors(board, x, y):
     selected_point = getattr(board, 'point_' + str(x) + str(y))
     pointleft, pointmiddle, pointright = get_horizontal_line(board, x, y)
@@ -62,7 +68,7 @@ def get_vertical_line(board, x, y):
 def check_if_mill(board, x, y):
     chosen_point = getattr(board, 'point_' + str(x) + str(y))
     color = chosen_point.cget("bg")
-    if color == "brown":
+    if color == board.neutral_color:
         return False
 
     # check for horizontal line
@@ -126,7 +132,7 @@ def return_random_point_to_move(board, color):
             neighbors = get_neighbors(board, random_point.x, random_point.y)
             possible_to_move = False
             for neighbor in neighbors:
-                if neighbor.cget("bg") == "brown":
+                if neighbor.cget("bg") == board.neutral_color:
                     possible_to_move = True
             if possible_to_move:
                 not_found = False
@@ -146,11 +152,13 @@ def look_for_cpu_mill(board, x, y):
         # search for human piece
         second_random_point = return_random_point_without_mill(board, board.human_is)
         if second_random_point:
-            second_random_point.configure(bg="brown")
+            export_move(2, False, board.human_is, second_random_point.x, second_random_point.y, None, None)
+            second_random_point.configure(bg=board.neutral_color)
             board.human_pieces_board = board.human_pieces_board - 1
         else:
             second_random_point = return_random_point(board, board.human_is)
-            second_random_point.configure(bg="brown")
+            export_move(2, False, board.human_is, second_random_point.x, second_random_point.y, None, None)
+            second_random_point.configure(bg=board.neutral_color)
             board.human_pieces_board = board.human_pieces_board - 1
 
 
@@ -169,7 +177,8 @@ def button_clicked(board, x, y):
                     board.info2.configure(text="Stein nicht möglich!")
                     can_be_removed = False
             if can_be_removed:
-                clicked_point.configure(bg="brown")
+                export_move(2, True, board.cpu_is, x, y, None, None)
+                clicked_point.configure(bg=board.neutral_color)
                 board.cpu_pieces_board = board.cpu_pieces_board - 1
                 board.remove_piece = False
                 if not (board.cpu_pieces_board < 3 and board.cpu_pieces_set == 9):
@@ -178,7 +187,8 @@ def button_clicked(board, x, y):
             board.info2.configure(text="Falscher Stein!")
     # set new piece
     elif board.human_pieces_set < 9:
-        if clicked_point.cget("bg") == "brown":
+        if clicked_point.cget("bg") == board.neutral_color:
+            export_move(0, True, board.human_is, None, None, x, y)
             clicked_point.configure(bg=board.human_is)
             board.human_pieces_set = board.human_pieces_set + 1
             board.human_pieces_board = board.human_pieces_board + 1
@@ -193,13 +203,14 @@ def button_clicked(board, x, y):
         good_move = False
         neighbors = get_neighbors(board, board.moved_x, board.moved_y)
         for neighbor in neighbors:
-            if neighbor is clicked_point and clicked_point.cget("bg") == "brown":
+            if neighbor is clicked_point and clicked_point.cget("bg") == board.neutral_color:
                 good_move = True
         if good_move:
             board.move_piece = False
+            export_move(1, True, board.human_is, board.moved_x, board.moved_y, x, y)
             clicked_point.configure(bg=board.human_is)
             old_point = getattr(board, 'point_' + str(board.moved_x) + str(board.moved_y))
-            old_point.configure(bg="brown")
+            old_point.configure(bg=board.neutral_color)
             if check_if_mill(board, x, y):
                 board.remove_piece = True
             else:
@@ -208,11 +219,12 @@ def button_clicked(board, x, y):
             board.info2.configure(text="Stein kann hier nicht platziert werden!")
     # select position to jump
     elif board.jump_piece:
-        if clicked_point.cget("bg") == "brown":
+        if clicked_point.cget("bg") == board.neutral_color:
             board.jump_piece = False
+            export_move(1, True, board.human_is, board.moved_x, board.moved_y, x, y)
             clicked_point.configure(bg=board.human_is)
             old_point = getattr(board, 'point_' + str(board.moved_x) + str(board.moved_y))
-            old_point.configure(bg="brown")
+            old_point.configure(bg=board.neutral_color)
             if check_if_mill(board, x, y):
                 board.remove_piece = True
             else:
@@ -225,12 +237,12 @@ def button_clicked(board, x, y):
             neighbors = get_neighbors(board, x, y)
             possible_to_move = False
             for neighbor in neighbors:
-                if neighbor.cget("bg") == "brown":
+                if neighbor.cget("bg") == board.neutral_color:
                     possible_to_move = True
             if possible_to_move:
                 board.moved_x = x
                 board.moved_y = y
-                clicked_point.configure(bg="blue")
+                clicked_point.configure(bg=board.move_color)
                 board.move_piece = True
             else:
                 board.info2.configure(text="Stein kann nicht verschoben werden!")
@@ -241,7 +253,7 @@ def button_clicked(board, x, y):
         if clicked_point.cget("bg") == board.human_is:
             board.moved_x = x
             board.moved_y = y
-            clicked_point.configure(bg="blue")
+            clicked_point.configure(bg=board.move_color)
             board.jump_piece = True
         else:
             board.info2.configure(text="Bitte eigenen Stein auswählen!")
@@ -274,7 +286,8 @@ def computers_turn(board):
     # set cpu piece
     if board.cpu_pieces_set < 9:
         # Search empty point
-        random_point = return_random_point(board, "brown")
+        random_point = return_random_point(board, board.neutral_color)
+        export_move(0, False, board.cpu_is, None, None, random_point.x, random_point.y)
         random_point.configure(bg=board.cpu_is)
         board.cpu_pieces_board = board.cpu_pieces_board + 1
         board.cpu_pieces_set = board.cpu_pieces_set + 1
@@ -286,8 +299,9 @@ def computers_turn(board):
             if random_point:
                 neighbors = get_neighbors(board, random_point.x, random_point.y)
                 for neighbor in neighbors:
-                    if neighbor.cget("bg") == "brown":
-                        random_point.configure(bg="brown")
+                    if neighbor.cget("bg") == board.neutral_color:
+                        export_move(1, False, board.cpu_is, random_point.x, random_point.y, neighbor.x, neighbor.y)
+                        random_point.configure(bg=board.neutral_color)
                         neighbor.configure(bg=board.cpu_is)
                         break
                 look_for_cpu_mill(board, neighbor.x, neighbor.y)
@@ -297,8 +311,9 @@ def computers_turn(board):
         # jump cpu piece
         else:
             first_point = return_random_point(board, board.cpu_is)
-            second_point = return_random_point(board, "brown")
-            first_point.configure(bg="brown")
+            second_point = return_random_point(board, board.neutral_color)
+            export_move(1, False, board.cpu_is, first_point.x, first_point.y, second_point.x, second_point.y)
+            first_point.configure(bg=board.neutral_color)
             second_point.configure(bg=board.cpu_is)
             look_for_cpu_mill(board, second_point.x, second_point.y)
 
