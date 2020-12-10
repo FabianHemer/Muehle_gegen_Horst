@@ -2,7 +2,7 @@ import socket
 
 host = "127.0.0.1"
 port = 25001
-data = "0,0,0"
+data = "place 0 true"
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
