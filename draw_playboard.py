@@ -3,6 +3,7 @@
 from tkinter import *
 import random
 import game_logic as gl
+import socket
 
 globalwindow = None
 
@@ -22,6 +23,10 @@ class playboard:
         self.cpu_is = "black"
         self.neutral_color = "brown"
         self.move_color = "blue"
+        self.connect_to_unity = False
+        self.host = "127.0.0.1"
+        self.port = 25001
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print("Board erstellt")
 
 
