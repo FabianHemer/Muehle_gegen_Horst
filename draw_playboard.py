@@ -25,13 +25,14 @@ class playboard:
         self.move_color = "blue"
         self.connect_to_unity = False
         self.host = "127.0.0.1"
-        self.port = 25001
+        self.port = 8052
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print("Board erstellt")
 
 
 def button_action(board,x, y):
     gl.button_clicked(board, x, y)
+
 
 
 def hilfe():
