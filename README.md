@@ -8,3 +8,4 @@ getestet mit Python 3.7.3
 - Anbindung über xml-rpc an den Roboter Horst
 - Physisches Brettspiel wird über Horst angesteuert
 - Bilderkennung über yolov5 erkennt Züge eines menschlichen Spielers
+-Test
