@@ -1,6 +1,7 @@
 # game_logic.py
 
 import random
+import socket
 
 
 def coordinates_to_number(x, y):
@@ -50,17 +51,18 @@ def export_move(board, type, active_player, color, from_x, from_y, to_x, to_y):
         data = "remove " + str(from_point)
     
     if board.connect_to_unity:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             # Connect to server and send data
-            board.sock.connect((board.host, board.port))
-            board.sock.sendall(data.encode("utf-8"))
-            data = board.sock.recv(1024).decode("utf-8")
-            print(data)
+            sock.connect((board.host, board.port))
+            sock.sendall(data.encode("utf-8"))
+            sock.shutdown(socket.SHUT_WR)
+            #data = board.sock.recv(1024).decode("utf-8")
+            #print(data)
 
         finally:
             # close always socket
-            board.sock.close()
-    print(data)
+            sock.close()
     
 
 def get_neighbors(board, x, y):

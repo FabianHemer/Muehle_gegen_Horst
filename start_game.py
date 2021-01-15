@@ -8,7 +8,7 @@ import threading
 window = draw.generate_window()
 draw.globalwindow = window
 board = draw.playboard()
-threading._start_new_thread(yolo5.start_yolo5, ("yolo5", board))
+threading._start_new_thread(yolo5.start_yolo5, ("yolo5", board, window))
 draw.draw_buttons(board, window)
 
 

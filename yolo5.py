@@ -2,16 +2,18 @@ import time
 import os
 import shutil
 
-stones = [(0,0,"white"),(2,3,"black"),(6,6,"black")]
+#stones = [(0,0,"white"),(2,3,"black"),(6,6,"black")]
+stones = [(0,0,"white"),(2,3,"black")]
 
-def start_yolo5 (threadName, board):
+def start_yolo5 (threadName, board, window):
     global stones
     point_list = ["00","03","06","11","13","15","22","23","24",\
                 "30","31","32","34","35","36","42","43","44",\
                 "51","53","55","60","63","66"]
-    while(True):
-        time.sleep(5)
-        print("yolo5 runs")
+    time.sleep(6)
+    print("yolo5 runs")
+    window.runs = True
+    while(window.runs):
         changedstones = []
         equalstones = []
 
@@ -31,8 +33,16 @@ def start_yolo5 (threadName, board):
                 changedstones.append(boardpoint)
             if not found and boardpoint.cget("bg") == "brown":
                 equalstones.append(boardpoint)
-        print("Equal:", equalstones)
-        print("Changed:", changedstones)
+        
+        if not changedstones:
+            pass
+        elif len(changedstones) <= 2:
+            print("maybe possible move")
+            pass
+        else:
+            print("Move not possible")
+
+        time.sleep(5)
         
 
 def load_board(board):
@@ -40,7 +50,7 @@ def load_board(board):
 
 
 def parse_yolo_to_points():
-    #pathToRun = '/Users/fh/FH/Semester 6/Semesterprojekt 2/YOLOv5_Test/runs/detect/exp'
+    pathToRun = '/Users/fh/FH/Semester 6/Semesterprojekt 2/YOLOv5_Test/runs/detect/exp'
     #pathToLabelFile = pathToRun + '/labels/screenshot.txt'
     pathToLabelFile = 'C:/00Data/HFU/Semester6/Semesterprojekt/screenshot.txt'
     labelsFile = open(pathToLabelFile, 'r')
