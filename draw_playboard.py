@@ -4,6 +4,8 @@ from tkinter import *
 import random
 import game_logic as gl
 import socket
+import threading
+import yolo5
 
 globalwindow = None
 
@@ -23,10 +25,12 @@ class playboard:
         self.cpu_is = "black"
         self.neutral_color = "brown"
         self.move_color = "blue"
-        self.connect_to_unity = False
+        self.connect_to_unity = True
         self.host = "127.0.0.1"
         self.port = 8052
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.runs = True
+        #self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #self.shutdown = socket.SHUT_WR
         print("Board erstellt")
 
 
@@ -44,13 +48,16 @@ def neustart():
     beenden()
     window = generate_window()
     board = playboard()
+    threading._start_new_thread(yolo5.start_yolo5, ("yolo5", board, window))
     draw_buttons(board, window)
 
 
 def beenden():
     global globalwindow
+    globalwindow.runs = False
     print("Beenden called")
     globalwindow.destroy()
+    
 
 
 def generate_window():
