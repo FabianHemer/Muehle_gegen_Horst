@@ -25,7 +25,7 @@ class playboard:
         self.cpu_is = "black"
         self.neutral_color = "brown"
         self.move_color = "lightblue"
-        self.connect_to_unity = True
+        self.connect_to_unity = False
         self.send_only_input = True
         self.input_type = 0
         self.host = "127.0.0.1"
@@ -43,14 +43,14 @@ def button_action(board,x, y):
         if board.input_type == 0:
             gl.export_move(board, 0, True, board.human_is, None, None, x, y)
         elif board.input_type == 1:
-            if not (board.start_x or board.start_y):
+            if board.start_x is None and board.start_y is None:
                 board.start_x = x
                 board.start_y = y
                 #clicked_point = getattr(board, 'point_' + str(x) + str(y))
                 #clicked_point.configure(bg=board.move_color)
                 board.info1.configure(text="Bitte Zielposition auswählen!")
             else:
-                gl.export_move(board, 0, True, board.human_is, board.start_x, board.start_y, x, y)
+                gl.export_move(board, 1, True, board.human_is, board.start_x, board.start_y, x, y)
                 board.start_x = None
                 board.start_y = None
                 board.info1.configure(text="Bitte Startposition auswählen!")

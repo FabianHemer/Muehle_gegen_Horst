@@ -54,6 +54,7 @@ def export_move(board, type, active_player, color, from_x, from_y, to_x, to_y):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             # Connect to server and send data
+            print(data)
             sock.connect((board.host, board.port))
             sock.sendall(data.encode("utf-8"))
             sock.shutdown(socket.SHUT_WR)

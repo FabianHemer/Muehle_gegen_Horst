@@ -41,17 +41,28 @@ def start_yolo5 (threadName, board, window):
             print("maybe possible move")
             pass
         else:
-            print("Move not possible")
+            print("Move not possible, please return piece")
 
-        time.sleep(5)
+        time.sleep(20)
 
 
 
 def parse_yolo_to_points():
-    pathToRun = '/Users/fh/FH/Semester 6/Semesterprojekt 2/YOLOv5_Test/runs/detect/exp'
-    #pathToLabelFile = pathToRun + '/labels/screenshot.txt'
-    pathToLabelFile = 'C:/00Data/HFU/Semester6/Semesterprojekt/screenshot.txt'
-    labelsFile = open(pathToLabelFile, 'r')
+    script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+    rel_screenshot_path = 'random_1.png'
+    rel_weights_path = 'YOLOv5/best.pt'
+    rel_labels_path = 'exp/labels/random_1.txt'
+    rel_labeldir_path = 'exp'
+    rel_detect_path = 'YOLOv5/yolov5/detect.py'
+    abs_weights_path = os.path.join(script_dir, rel_weights_path)
+    abs_screenshot_path = os.path.join(script_dir, rel_screenshot_path)
+    abs_labels_path = os.path.join(script_dir, rel_labels_path)
+    abs_labeldir_path = os.path.join(script_dir, rel_labeldir_path)
+    abs_detect_path = os.path.join(script_dir, rel_detect_path)
+    code = "python " + abs_detect_path + " --weights {0} --img 416 --conf 0.4 --project Muehle_gegen_Horst --source {1} --save-txt".format(abs_weights_path, abs_screenshot_path)
+    os.system(code)
+    time.sleep(3)
+    labelsFile = open(abs_labels_path, 'r')
     myList = list()
     result = list()
 
@@ -122,5 +133,5 @@ def parse_yolo_to_points():
             result.append((6, 6, myClass))
 
     labelsFile.close()
-    shutil.rmtree(pathToRun, ignore_errors=True)
+    shutil.rmtree(abs_labeldir_path, ignore_errors=True)
     return result
