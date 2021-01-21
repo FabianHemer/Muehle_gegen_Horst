@@ -379,3 +379,81 @@ def computers_turn(board):
         if human_point is None:
             board.info1.configure(text="Du hast verloren! Der Spieler ist bewegungsunfähig!")
             board.win = 2
+
+
+def unity_button_clicked(board, x, y):     
+    board.info2.configure(text="")
+    print("Button:", x, y, "clicked!")
+    clicked_point = getattr(board, 'point_' + str(x) + str(y))
+
+    # remove piece
+    if board.remove_piece:
+        if clicked_point.cget("bg") == board.cpu_is:
+            can_be_removed = True
+            if check_if_mill(board, x, y):
+                one_point = return_random_point_without_mill(board, board.cpu_is)
+                if one_point:
+                    board.info2.configure(text="Stein nicht möglich!")
+                    can_be_removed = False
+            if can_be_removed:
+                export_move(board, 2, True, board.cpu_is, x, y, None, None)
+        else:
+            board.info2.configure(text="Falscher Stein!")
+    # set new piece
+    elif board.human_pieces_set < 9:
+        if clicked_point.cget("bg") == board.neutral_color:
+            export_move(board, 0, True, board.human_is, None, None, x, y)
+        else:
+            board.info2.configure(text="Stein kann hier nicht platziert werden!")
+    # select position to move
+    elif board.move_piece:
+        good_move = False
+        neighbors = get_neighbors(board, board.moved_x, board.moved_y)
+        for neighbor in neighbors:
+            if neighbor is clicked_point and clicked_point.cget("bg") == board.neutral_color:
+                good_move = True
+        if good_move:
+            board.move_piece = False
+            export_move(board, 1, True, board.human_is, board.moved_x, board.moved_y, x, y)
+            old_point = getattr(board, 'point_' + str(board.moved_x) + str(board.moved_y))
+            old_point.configure(bg=board.neutral_color)
+        else:
+            board.info2.configure(text="Stein kann hier nicht platziert werden!")
+    # select position to jump
+    elif board.jump_piece:
+        if clicked_point.cget("bg") == board.neutral_color:
+            board.jump_piece = False
+            export_move(board, 1, True, board.human_is, board.moved_x, board.moved_y, x, y)
+            old_point = getattr(board, 'point_' + str(board.moved_x) + str(board.moved_y))
+            old_point.configure(bg=board.neutral_color)
+        else:
+            board.info2.configure(text="Stein kann hier nicht platziert werden!")
+    # select piece to move
+    elif board.human_pieces_board > 3 and board.cpu_pieces_board >= 3 and board.win == 0:
+        if clicked_point.cget("bg") == board.human_is:
+            neighbors = get_neighbors(board, x, y)
+            possible_to_move = False
+            for neighbor in neighbors:
+                if neighbor.cget("bg") == board.neutral_color:
+                    possible_to_move = True
+            if possible_to_move:
+                board.moved_x = x
+                board.moved_y = y
+                clicked_point.configure(bg=board.move_color)
+                board.move_piece = True
+            else:
+                board.info2.configure(text="Stein kann nicht verschoben werden!")
+        else:
+            board.info2.configure(text="Bitte eigenen Stein auswählen!")
+    # select piece to jump
+    elif board.human_pieces_board == 3 and board.cpu_pieces_board >= 3 and board.win == 0:
+        if clicked_point.cget("bg") == board.human_is:
+            board.moved_x = x
+            board.moved_y = y
+            clicked_point.configure(bg=board.move_color)
+            board.jump_piece = True
+        else:
+            board.info2.configure(text="Bitte eigenen Stein auswählen!")
+    # game finished
+    else:
+        board.info2.configure(text="Bitte neues Spiel starten!")

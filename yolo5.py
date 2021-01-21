@@ -3,17 +3,18 @@ import os
 import shutil
 
 #stones = [(0,0,"white"),(2,3,"black"),(6,6,"black")]
-stones = [(0,0,"white"),(2,3,"black")]
+#stones = [(0,0,"white"),(2,3,"black")]
 
 def start_yolo5 (threadName, board, window):
-    global stones
+    #global stones
     point_list = ["00","03","06","11","13","15","22","23","24",\
                 "30","31","32","34","35","36","42","43","44",\
                 "51","53","55","60","63","66"]
-    time.sleep(6)
     print("yolo5 runs")
+    time.sleep(6)
     window.runs = True
     while(window.runs):
+        stones = parse_yolo_to_points()
         changedstones = []
         equalstones = []
 
@@ -43,10 +44,7 @@ def start_yolo5 (threadName, board, window):
             print("Move not possible")
 
         time.sleep(5)
-        
 
-def load_board(board):
-    global stones
 
 
 def parse_yolo_to_points():
@@ -65,7 +63,7 @@ def parse_yolo_to_points():
         myX = float(i[1])
         myY = float(i[2])
         myClass = "white"
-        if i[0] == 0:
+        if i[0] == '0':
             myClass = "black"
 
         if 0.26 < myX < 0.33 and 0.86 < myY < 1:
@@ -125,3 +123,4 @@ def parse_yolo_to_points():
 
     labelsFile.close()
     shutil.rmtree(pathToRun, ignore_errors=True)
+    return result
