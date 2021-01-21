@@ -26,8 +26,8 @@ class playboard:
         self.neutral_color = "brown"
         self.move_color = "lightblue"
         self.connect_to_unity = False
-        self.human_console_input = True
-        self.console_input_type = 0
+        self.send_only_input = True
+        self.input_type = 0
         self.host = "127.0.0.1"
         self.port = 8052
         self.runs = True
@@ -37,12 +37,12 @@ class playboard:
 
 
 def button_action(board,x, y):
-    if board.connect_to_unity and not board.human_console_input:
+    if board.connect_to_unity and not board.send_only_input:
         gl.unity_button_clicked(board, x, y)
-    elif board.human_console_input:
-        if board.console_input_type == 0:
+    elif board.send_only_input:
+        if board.input_type == 0:
             gl.export_move(board, 0, True, board.human_is, None, None, x, y)
-        elif board.console_input_type == 1:
+        elif board.input_type == 1:
             if not (board.start_x or board.start_y):
                 board.start_x = x
                 board.start_y = y
@@ -54,14 +54,14 @@ def button_action(board,x, y):
                 board.start_x = None
                 board.start_y = None
                 board.info1.configure(text="Bitte Startposition auswählen!")
-        elif board.console_input_type == 2:
+        elif board.input_type == 2:
             gl.export_move(board, 2, True, board.human_is, x, y, None, None)
     else:
         gl.button_clicked(board, x, y)
 
 
 def console_input(board, input):
-    board.console_input_type = input
+    board.input_type = input
     board.set_button.configure(bg="white")
     board.move_button.configure(bg="white")
     board.remove_button.configure(bg="white")
@@ -232,7 +232,7 @@ def draw_buttons(board, window):
     board.info2 = Label(window, text="")
     board.info2.grid(row=8, columnspan = 7)
 
-    if board.human_console_input:
+    if board.send_only_input:
         board.info1.configure(text="Bitte Position auswählen!")
         board.set_button = Button(window, text="set", bg="lightblue", height = 1, width = 6, activebackground="grey", command=lambda: console_input(board,0))
         board.set_button.grid(row=9, column=0)
