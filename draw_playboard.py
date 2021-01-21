@@ -24,8 +24,10 @@ class playboard:
         self.human_is = "white"
         self.cpu_is = "black"
         self.neutral_color = "brown"
-        self.move_color = "blue"
-        self.connect_to_unity = True
+        self.move_color = "lightblue"
+        self.connect_to_unity = False
+        self.human_console_input = True
+        self.console_input_type = 0
         self.host = "127.0.0.1"
         self.port = 8052
         self.runs = True
@@ -35,7 +37,45 @@ class playboard:
 
 
 def button_action(board,x, y):
-    gl.button_clicked(board, x, y)
+    if board.connect_to_unity and not board.human_console_input:
+        gl.unity_button_clicked(board, x, y)
+    elif board.human_console_input:
+        if board.console_input_type == 0:
+            gl.export_move(board, 0, True, board.human_is, None, None, x, y)
+        elif board.console_input_type == 1:
+            if not (board.start_x or board.start_y):
+                board.start_x = x
+                board.start_y = y
+                #clicked_point = getattr(board, 'point_' + str(x) + str(y))
+                #clicked_point.configure(bg=board.move_color)
+                board.info1.configure(text="Bitte Zielposition auswählen!")
+            else:
+                gl.export_move(board, 0, True, board.human_is, board.start_x, board.start_y, x, y)
+                board.start_x = None
+                board.start_y = None
+                board.info1.configure(text="Bitte Startposition auswählen!")
+        elif board.console_input_type == 2:
+            gl.export_move(board, 2, True, board.human_is, x, y, None, None)
+    else:
+        gl.button_clicked(board, x, y)
+
+
+def console_input(board, input):
+    board.console_input_type = input
+    board.set_button.configure(bg="white")
+    board.move_button.configure(bg="white")
+    board.remove_button.configure(bg="white")
+    if input == 0:
+        board.info1.configure(text="Bitte Position auswählen!")
+        board.set_button.configure(bg="lightblue")
+    elif input == 1:
+        board.info1.configure(text="Bitte Startposition auswählen!")
+        board.move_button.configure(bg="lightblue")
+        board.start_x = None
+        board.start_y = None
+    elif input == 2:
+        board.info1.configure(text="Bitte Stein auswählen!")
+        board.remove_button.configure(bg="lightblue")
 
 
 
@@ -191,6 +231,16 @@ def draw_buttons(board, window):
     board.info1.grid(row=7, columnspan = 7)
     board.info2 = Label(window, text="")
     board.info2.grid(row=8, columnspan = 7)
+
+    if board.human_console_input:
+        board.info1.configure(text="Bitte Position auswählen!")
+        board.set_button = Button(window, text="set", bg="lightblue", height = 1, width = 6, activebackground="grey", command=lambda: console_input(board,0))
+        board.set_button.grid(row=9, column=0)
+        board.move_button = Button(window, text="move", bg="white", height = 1, width = 6, activebackground="grey", command=lambda: console_input(board,1))
+        board.move_button.grid(row=9, column=3)
+        board.remove_button = Button(window, text="remove", bg="white", height = 1, width = 6, activebackground="grey", command=lambda: console_input(board,2))
+        board.remove_button.grid(row=9, column=6)
+
 
     menuleiste = Menu(window)
     datei_menu = Menu(menuleiste, tearoff=0)
