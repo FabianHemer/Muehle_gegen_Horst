@@ -1,6 +1,8 @@
 import time
 import os
 import shutil
+import socket
+import re
 import game_logic as gl
 
 #stones = [(0,0,"white"),(2,3,"black"),(6,6,"black")]
@@ -15,7 +17,7 @@ def start_yolo5 (threadName, board, window):
     time.sleep(6)
     window.runs = True
     while(window.runs):
-        stones = parse_yolo_to_points()
+        stones = parse_yolo_to_points(board)
         changedstones = []
         equalstones = []
 
@@ -54,7 +56,38 @@ def start_yolo5 (threadName, board, window):
         time.sleep(20)
 
 
-def parse_yolo_to_points():
+def parse_yolo_to_points(board):
+    print("hallo")
+    if board.connect_to_unity:
+        file_name = "bild.png"
+        data = "getimg"
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            sock.connect((board.host, board.port))
+            sock.sendall(data.encode("utf-8"))
+
+            res = b""
+            while True:
+                data = sock.recv(1024)
+                if not data:
+                    break
+                res += data
+                print(data)
+            sock.shutdown(socket.SHUT_WR)
+            r = re.findall("&photo_data=(.*)" ,res ,re.DOTALL)
+            raw_img = str(r[0])
+
+            print("File name:" + file_name)
+            print("Size:" + str(len(raw_img)))
+            with open(file_name, 'wb') as f:
+                f.write(raw_img)
+
+            print("Done")
+
+        finally:
+            sock.close()
+    print("ende")
+    '''
     script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
     rel_screenshot_path = 'random_1.png'
     rel_weights_path = 'YOLOv5/best.pt'
@@ -142,3 +175,4 @@ def parse_yolo_to_points():
     labelsFile.close()
     shutil.rmtree(abs_labeldir_path, ignore_errors=True)
     return result
+    '''

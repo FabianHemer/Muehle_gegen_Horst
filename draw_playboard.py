@@ -25,7 +25,7 @@ class playboard:
         self.cpu_is = "black"
         self.neutral_color = "brown"
         self.move_color = "lightblue"
-        self.connect_to_unity = False
+        self.connect_to_unity = True
         self.send_only_input = True
         self.input_type = 0
         self.host = "127.0.0.1"
