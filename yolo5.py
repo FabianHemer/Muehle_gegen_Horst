@@ -42,24 +42,23 @@ def start_yolo5 (threadName, board, window):
             print("Nothing changed in input")
         elif len(changedstones) <= 2:
             if len(changedstones) == 1:
-                 gl.button_clicked(board, changedstones[0].x,changedstones[0].y)
+                 gl.unity_button_clicked(board, changedstones[0].x,changedstones[0].y)
             elif len(changedstones) == 2:
                 for changedstone in changedstones:
                     if boardpoint.cget("bg") == board.neutral_color:
-                        gl.button_clicked(board, changedstone.x,changedstone.y)
+                        gl.unity_button_clicked(board, changedstone.x,changedstone.y)
                 for changedstone in changedstones:
                     if boardpoint.cget("bg") == board.human_is:
-                        gl.button_clicked(board, changedstone.x,changedstone.y)
+                        gl.unity_button_clicked(board, changedstone.x,changedstone.y)
         else:
             print("Move not possible, please return piece")
 
-        time.sleep(20)
+        time.sleep(10)
 
 
 def parse_yolo_to_points(board):
-    print("hallo")
     if board.connect_to_unity:
-        file_name = "bild.png"
+        file_name = "Muehle_gegen_Horst/screenshot.png"
         data = "getimg"
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -69,29 +68,26 @@ def parse_yolo_to_points(board):
             res = b""
             while True:
                 data = sock.recv(1024)
-                if not data:
+                if data.endswith(b'\x00IEND\xaeB`\x82'):
+                    res += data
                     break
                 res += data
-                print(data)
+                #print(data)
             sock.shutdown(socket.SHUT_WR)
-            r = re.findall("&photo_data=(.*)" ,res ,re.DOTALL)
-            raw_img = str(r[0])
 
             print("File name:" + file_name)
-            print("Size:" + str(len(raw_img)))
+            #print("Size:" + str(len(res)))
             with open(file_name, 'wb') as f:
-                f.write(raw_img)
-
-            print("Done")
+                f.write(res)
+                f.close()
 
         finally:
             sock.close()
-    print("ende")
-    '''
+    
     script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
-    rel_screenshot_path = 'random_1.png'
+    rel_screenshot_path = 'screenshot.png'
     rel_weights_path = 'YOLOv5/best.pt'
-    rel_labels_path = 'exp/labels/random_1.txt'
+    rel_labels_path = 'exp/labels/screenshot.txt'
     rel_labeldir_path = 'exp'
     rel_detect_path = 'YOLOv5/yolov5/detect.py'
     abs_weights_path = os.path.join(script_dir, rel_weights_path)
@@ -173,6 +169,7 @@ def parse_yolo_to_points(board):
             result.append((6, 6, myClass))
 
     labelsFile.close()
-    shutil.rmtree(abs_labeldir_path, ignore_errors=True)
+    #shutil.rmtree(abs_labeldir_path, ignore_errors=True)
+    print(result)
     return result
-    '''
+    
