@@ -1,6 +1,7 @@
 import time
 import os
 import shutil
+import game_logic as gl
 
 #stones = [(0,0,"white"),(2,3,"black"),(6,6,"black")]
 #stones = [(0,0,"white"),(2,3,"black")]
@@ -30,21 +31,27 @@ def start_yolo5 (threadName, board, window):
                         else:
                             changedstones.append(boardpoint)
 
-            if not found and boardpoint.cget("bg") != "brown":
+            if not found and boardpoint.cget("bg") != board.neutral_color:
                 changedstones.append(boardpoint)
-            if not found and boardpoint.cget("bg") == "brown":
+            if not found and boardpoint.cget("bg") == board.neutral_color:
                 equalstones.append(boardpoint)
         
         if not changedstones:
-            pass
+            print("Nothing changed in input")
         elif len(changedstones) <= 2:
-            print("maybe possible move")
-            pass
+            if len(changedstones) == 1:
+                 gl.button_clicked(board, changedstones[0].x,changedstones[0].y)
+            elif len(changedstones) == 2:
+                for changedstone in changedstones:
+                    if boardpoint.cget("bg") == board.neutral_color:
+                        gl.button_clicked(board, changedstone.x,changedstone.y)
+                for changedstone in changedstones:
+                    if boardpoint.cget("bg") == board.human_is:
+                        gl.button_clicked(board, changedstone.x,changedstone.y)
         else:
             print("Move not possible, please return piece")
 
         time.sleep(20)
-
 
 
 def parse_yolo_to_points():
