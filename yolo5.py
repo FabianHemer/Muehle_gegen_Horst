@@ -53,7 +53,7 @@ def start_yolo5 (threadName, board, window):
         else:
             print("Move not possible, please return piece")
 
-        time.sleep(10)
+        time.sleep(1)
 
 
 def parse_yolo_to_points(board):
@@ -75,7 +75,7 @@ def parse_yolo_to_points(board):
                 #print(data)
             sock.shutdown(socket.SHUT_WR)
 
-            print("File name:" + file_name)
+            #print("File name:" + file_name)
             #print("Size:" + str(len(res)))
             with open(file_name, 'wb') as f:
                 f.write(res)
@@ -114,25 +114,25 @@ def parse_yolo_to_points(board):
             myClass = "black"
 
         if 0.26 < myX < 0.33 and 0.86 < myY < 1:
-            result.append((0, 0, myClass))
+            result.append((6, 0, myClass))
         elif 0.45 < myX < 0.52 and 0.86 < myY < 1:
-            result.append((0, 3, myClass))
+            result.append((6, 3, myClass))
         elif 0.66 < myX < 0.75 and 0.86 < myY < 1:
-            result.append((0, 6, myClass))
+            result.append((6, 6, myClass))
         
         elif 0.33 < myX < 0.39 and 0.75 < myY < 0.85:
-            result.append((1, 1, myClass))
+            result.append((5, 1, myClass))
         elif 0.45 < myX < 0.52 and 0.75 < myY < 0.85:
-            result.append((1, 3, myClass))
+            result.append((5, 3, myClass))
         elif 0.58 < myX < 0.66 and 0.75 < myY < 0.85:
-            result.append((1, 5, myClass))
+            result.append((5, 5, myClass))
 
         elif 0.39 < myX < 0.45 and 0.60 < myY < 0.75:
-            result.append((2, 2, myClass))
+            result.append((4, 2, myClass))
         elif 0.45 < myX < 0.52 and 0.60 < myY < 0.75:
-            result.append((2, 3, myClass))
+            result.append((4, 3, myClass))
         elif 0.52 < myX < 0.58 and 0.60 < myY < 0.75:
-            result.append((2, 4, myClass))
+            result.append((4, 4, myClass))
 
         elif 0.26 < myX < 0.33 and 0.45 < myY < 0.60:
             result.append((3, 0, myClass))
@@ -148,28 +148,28 @@ def parse_yolo_to_points(board):
             result.append((3, 6, myClass))
 
         elif 0.39 < myX < 0.45 and 0.30 < myY < 0.45:
-            result.append((4, 2, myClass))
+            result.append((2, 2, myClass))
         elif 0.45 < myX < 0.52 and 0.30 < myY < 0.45:
-            result.append((4, 3, myClass))
+            result.append((2, 3, myClass))
         elif 0.52 < myX < 0.58 and 0.30 < myY < 0.45:
-            result.append((4, 4, myClass))
+            result.append((2, 4, myClass))
         
         elif 0.33 < myX < 0.39 and 0.15 < myY < 0.30:
-            result.append((5, 1, myClass))
+            result.append((1, 1, myClass))
         elif 0.45 < myX < 0.52 and 0.15 < myY < 0.30:
-            result.append((5, 3, myClass))
+            result.append((1, 3, myClass))
         elif 0.58 < myX < 0.66 and 0.15 < myY < 0.30:
-            result.append((5, 5, myClass))
+            result.append((1, 5, myClass))
 
         elif 0.26 < myX < 0.33 and 0.00 < myY < 0.15:
-            result.append((6, 0, myClass))
+            result.append((0, 0, myClass))
         elif 0.45 < myX < 0.52 and 0.00 < myY < 0.15:
-            result.append((6, 3, myClass))
+            result.append((0, 3, myClass))
         elif 0.66 < myX < 0.75 and 0.00 < myY < 0.15:
-            result.append((6, 6, myClass))
+            result.append((0, 6, myClass))
 
     labelsFile.close()
-    #shutil.rmtree(abs_labeldir_path, ignore_errors=True)
-    print(result)
+    shutil.rmtree(abs_labeldir_path, ignore_errors=True)
+    os.remove(abs_screenshot_path)
     return result
     
